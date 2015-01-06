@@ -14,8 +14,11 @@ xcompmgr -n &
 #
 
 # Activate primary screen only
+PRIMARY=`xrandr | grep ' connected primary' | cut -f 1 -d ' '`
+if [[ ! -z "$PRIMARY" ]] ; then
+    xrandr --output $PRIMARY --auto --primary
+fi
 xrandr --output DVI-I-2 --off
-xrandr --output DVI-I-3 --auto --primary
 
 #
 # STARTUP ICON TRAY
@@ -43,8 +46,8 @@ xrandr --output DVI-I-3 --auto --primary
 #
 stalonetray \
   --icon-gravity E \
-  --geometry 3x1-0+0 \
-  --max-geometry 3x1-0+0 \
+  --geometry 4x1-0+0 \
+  --max-geometry 4x1-0+0 \
   --background '#000000' \
   --skip-taskbar \
   --icon-size 24 \
@@ -52,24 +55,11 @@ stalonetray \
   --window-strut none \
 &
 
-# network monitor
-if [ -x /usr/bin/nm-applet ] ; then
-   nm-applet --sm-disable &
-fi
-
-# volume control
-if [ -x /usr/bin/volti ] ; then
-   volti &
-fi
-
 # Run the gnome-keyring-daemon to avoid issues you otherwise may encounter
 # when using gnome applications which expect access to the keyring, such
 # as Empathy. This prevents prompts you may otherwise get for invalid
 # certificates and the like.
 gnome-keyring-daemon --start --components=gpg,pkcs11,secrets,ssh
-
-# Make backtick type a backtick, not a combining-accent
-xmodmap -e 'keycode 49 = grave asciitilde'
 
 # Now, finally, start xmonad
 exec xmonad

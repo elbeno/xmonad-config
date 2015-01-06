@@ -10,7 +10,7 @@ Config {
   -- of your screen to make it play nicely with stalonetray, which we
   -- want to be taking up the remainer of the space on the right side
   -- of your screen.
-  position = Static { xpos = 0, ypos = 0, width = 1848, height = 24 },
+  position = Static { xpos = 0, ypos = 0, width = 1824, height = 24 },
 
   -- list of commands which gather information about your system for
   -- presentation in the bar.

@@ -32,6 +32,7 @@ main = do
   xmonad $ defaultConfig {
       terminal = myTerminal
     , modMask = myModMask
+    , startupHook = spawn "~/.xmonad/startup-hook"
     , manageHook = manageHook defaultConfig
                    <+> composeAll myManagementHooks
                    <+> manageDocks

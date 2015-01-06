@@ -1,0 +1,24 @@
+#!/bin/bash
+
+# network monitor
+if [ -x /usr/bin/nm-applet ] ; then
+   nm-applet --sm-disable &
+fi
+
+# volume control
+if [ -x /usr/bin/volti ] ; then
+   volti &
+fi
+
+# Applet for managing print jobs from the tray.
+if [ -x /usr/bin/system-config-printer-applet ] ; then
+    system-config-printer-applet &
+fi
+
+TOUCHPAD_ID=`xinput | grep 'Synaptics TouchPad' | cut -f 2 | cut -f 2 -d =`
+if [[ ! -z "$TOUCHPAD_ID" ]] ; then
+    xinput set-prop $TOUCHPAD_ID "Device Enabled" 0
+fi
+
+# Make backtick type a backtick, not a combining-accent
+xmodmap -e 'keycode 49 = grave asciitilde'
